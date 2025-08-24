@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Peaches Portfolio</title>
+    <link rel="stylesheet" href="output.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* Smooth scrolling */
+      * {
+        scroll-behavior: smooth;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, sans-serif;
+      }
+
+      /* Fade in animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-fade-in {
+        animation: fadeIn 1s ease-out;
+      }
+
+      /* Scroll-triggered animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes fadeInRight {
+        from {
+          opacity: 0;
+          transform: translateX(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes fadeInScale {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      /* Animation classes */
+      .scroll-animate {
+        opacity: 0;
+        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .scroll-animate.animate-up {
+        transform: translateY(50px);
+      }
+
+      .scroll-animate.animate-left {
+        transform: translateX(-50px);
+      }
+
+      .scroll-animate.animate-right {
+        transform: translateX(50px);
+      }
+
+      .scroll-animate.animate-scale {
+        transform: scale(0.8);
+      }
+
+      .scroll-animate.is-visible {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);
+      }
+
+      /* Stagger animation delays */
+      .scroll-animate.delay-100 {
+        transition-delay: 0.1s;
+      }
+      .scroll-animate.delay-200 {
+        transition-delay: 0.2s;
+      }
+      .scroll-animate.delay-300 {
+        transition-delay: 0.3s;
+      }
+      .scroll-animate.delay-400 {
+        transition-delay: 0.4s;
+      }
+      .scroll-animate.delay-500 {
+        transition-delay: 0.5s;
+      }
+      .scroll-animate.delay-600 {
+        transition-delay: 0.6s;
+      }
+
+      /* Hamburger animation styles */
+      .hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .hamburger span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: white;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+        transform-origin: center;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+
+      /* Footer gradient background */
+      .footer-gradient {
+        background: linear-gradient(
+          135deg,
+          #1f2937 0%,
+          #111827 50%,
+          #000000 100%
+        );
+      }
+
+      /* Scroll offset for navigation */
+      section {
+        scroll-margin-top: 80px;
+      }
+    </style>
+  </head>
+  <body>
+    <article
+      class="min-h-screen flex flex-col w-full bg-fixed bg-cover bg-center relative"
+      id="home"
+      style="background-image: url('../img/hero-bg.jpg')"
+    >
+      <div class="absolute inset-0 bg-black/50"></div>
+
+      <!-- Content -->
+      <div class="relative z-10 flex flex-col min-h-screen">
+        <!-- Navbar -->
+        <nav
+          class="flex justify-between items-center p-6 bg-black/50 backdrop-blur-sm fixed w-full top-0 z-50"
+        >
+          <h1 class="text-white text-2xl font-bold">Peaches.</h1>
+          <div
+            class="hidden md:flex items-center justify-center space-x-8 text-white"
+          >
+            <a
+              href="#home"
+              class="nav-link relative pb-1 transition-all duration-300 hover:text-green-400 border-b-2 border-transparent hover:border-green-400"
+              onclick="setActive(this)"
+              >Home</a
+            >
+            <a
+              href="#projects"
+              class="nav-link relative pb-1 transition-all duration-300 hover:text-green-400 border-b-2 border-transparent hover:border-green-400"
+              onclick="setActive(this)"
+              >Featured Projects</a
+            >
+            <a
+              href="#about"
+              class="nav-link relative pb-1 transition-all duration-300 hover:text-green-400 border-b-2 border-transparent hover:border-green-400"
+              onclick="setActive(this)"
+              >About Me</a
+            >
+            <a
+              href="#contact"
+              class="nav-link relative pb-1 transition-all duration-300 hover:text-green-400 border-b-2 border-transparent hover:border-green-400"
+              onclick="setActive(this)"
+              >Contact Me</a
+            >
+            <a
+              href="#"
+              target="_blank"
+              class="ml-4 px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl shadow-lg hover:shadow-green-500/25 hover:scale-105 transition-all duration-300 transform"
+            >
+              View My Resume
+            </a>
+          </div>
+
+          <!-- Mobile menu button with hamburger animation -->
+          <button
+            class="md:hidden text-white p-2"
+            onclick="toggleMobileMenu()"
+            id="mobile-menu-btn"
+          >
+            <div class="hamburger">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </button>
+        </nav>
+
+        <!-- Mobile menu -->
+        <div
+          id="mobile-menu"
+          class="hidden md:hidden bg-black/90 backdrop-blur-sm p-6 space-y-4 fixed top-20 left-0 right-0 z-40"
+        >
+          <a
+            href="#home"
+            class="block text-white hover:text-green-400 transition-colors duration-300"
+            onclick="closeMobileMenu()"
+            >Home</a
+          >
+          <a
+            href="#projects"
+            class="block text-white hover:text-green-400 transition-colors duration-300"
+            onclick="closeMobileMenu()"
+            >Featured Projects</a
+          >
+          <a
+            href="#about"
+            class="block text-white hover:text-green-400 transition-colors duration-300"
+            onclick="closeMobileMenu()"
+            >About Me</a
+          >
+          <a
+            href="#contact"
+            class="block text-white hover:text-green-400 transition-colors duration-300"
+            onclick="closeMobileMenu()"
+            >Contact Me</a
+          >
+          <a
+            href="#"
+            class="block w-fit px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl"
+            onclick="closeMobileMenu()"
+            >View My Resume</a
+          >
+        </div>
+
+        <!-- Hero -->
+        <div
+          class="flex flex-col justify-center items-center flex-grow px-4 text-center animate-fade-in pt-20"
+        >
+          <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">
+            Hi, I am
+            <span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600"
+              >Isaac Olaosebikan</span
+            >
+          </h1>
+          <p
+            class="mt-6 text-lg md:text-xl text-gray-200 max-w-2xl leading-relaxed"
+          >
+            A seasoned
+            <span class="text-green-400 font-semibold">Frontend Developer</span>
+            transforming ideas into stunning digital experiences. Let's create
+            something amazing!
+          </p>
+
+          <!-- Social Links -->
+          <div class="flex gap-6 mt-8">
+            <!-- GitHub -->
+            <a
+              href="https://github.com/Olaosebikancodes"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:text-green-400 hover:bg-white/20 hover:scale-110 transition-all duration-300 transform"
+            >
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2.1c-3.2.7-3.9-1.6-3.9-1.6-.5-1.3-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 2.3.7 2.3.7s.3-1.1.9-1.4c-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.1-3.2-.1-.3-.5-1.4.1-3 0 0 .9-.3 3 .9.9-.3 1.8-.4 2.7-.4.9 0 1.8.1 2.7.4 2.1-1.3 3-.9 3-.9.6 1.6.2 2.7.1 3 .7.9 1.1 1.9 1.1 3.2 0 4.5-2.7 5.4-5.3 5.8.6.4 1 1.2 1 2.3v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.65 18.35.5 12 .5z"
+                />
+              </svg>
+            </a>
+
+            <!-- Gmail -->
+            <a
+              href="mailto:olaosebikani345@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Gmail"
+              class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:text-green-400 hover:bg-white/20 hover:scale-110 transition-all duration-300 transform"
+            >
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"
+                />
+              </svg>
+            </a>
+
+            <!-- LinkedIn -->
+            <a
+              href="https://www.linkedin.com/in/olaosebikan-isaac-a70658240/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:text-green-400 hover:bg-white/20 hover:scale-110 transition-all duration-300 transform"
+            >
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M4.98 3.5C3.34 3.5 2 4.85 2 6.5S3.34 9.5 4.98 9.5 7.96 8.15 7.96 6.5 6.62 3.5 4.98 3.5zM2.4 21.5h5.16v-12H2.4v12zM9.64 9.5v12h5.16v-6.7c0-1.8.36-3.54 2.58-3.54 2.19 0 2.22 2.05 2.22 3.66v6.58h5.16v-7.35c0-3.63-1.94-5.32-4.53-5.32-2.13 0-3.08 1.18-3.61 2.02h-.05V9.5h-5z"
+                />
+              </svg>
+            </a>
+
+            <!-- WhatsApp -->
+            <a
+              href="https://wa.me/2348108621534"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+              class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:text-green-400 hover:bg-white/20 hover:scale-110 transition-all duration-300 transform"
+            >
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.531 3.488"
+                />
+              </svg>
+            </a>
+
+            <!-- Instagram -->
+            <a
+              href="https://instagram.com/olaosebikan_isaac"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:text-green-400 hover:bg-white/20 hover:scale-110 transition-all duration-300 transform"
+            >
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Services -->
+    <section
+      class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col items-center justify-center py-16"
+    >
+      <p
+        class="scroll-animate animate-up text-xs text-gray-400 leading-tight font-light tracking-widest uppercase"
+      >
+        Services
+      </p>
+      <h2
+        class="scroll-animate animate-up delay-100 text-white font-bold text-4xl mt-4 text-center"
+      >
+        What
+        <span
+          class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600"
+          >I do</span
+        >.
+      </h2>
+
+      <div
+        class="grid grid-cols-1 md:grid-cols-3 gap-8 p-6 mt-12 w-full max-w-6xl"
+      >
+        <!-- Card 1 -->
+        <div
+          class="scroll-animate animate-up delay-200 group bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 shadow-xl hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 transform hover:-translate-y-2 border border-gray-700/50"
+        >
+          <div
+            class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600 mb-4"
+          >
+            01
+          </div>
+          <div
+            class="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-green-400/20 to-green-600/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
+          >
+            <svg
+              class="w-8 h-8 text-green-400"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M14 2H6C4.9 2 4 2.9 4 4v16c0 1.1.89 2 2 2h12c1.11 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"
+              />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Web Development</h3>
+          <p class="text-sm text-gray-300 leading-relaxed">
+            I use HTML5, CSS3, JavaScript, and Tailwind to build digital
+            solutions for users.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div
+          class="scroll-animate animate-up delay-300 group bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 shadow-xl hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 transform hover:-translate-y-2 border border-gray-700/50"
+        >
+          <div
+            class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600 mb-4"
+          >
+            02
+          </div>
+          <div
+            class="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-green-400/20 to-green-600/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
+          >
+            <svg
+              class="w-8 h-8 text-green-400"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+              />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">UI/UX Design</h3>
+          <p class="text-sm text-gray-300 leading-relaxed">
+            I design user-friendly interfaces that are visually appealing and
+            easy to navigate.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div
+          class="scroll-animate animate-up delay-400 group bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 shadow-xl hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 transform hover:-translate-y-2 border border-gray-700/50"
+        >
+          <div
+            class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600 mb-4"
+          >
+            03
+          </div>
+          <div
+            class="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-green-400/20 to-green-600/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
+          >
+            <svg
+              class="w-8 h-8 text-green-400"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zM7 4V3h10v1H7zm0 14V6h10v12H7zm0 3v-1h10v1H7z"
+              />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Responsive Design</h3>
+          <p class="text-sm text-gray-300 leading-relaxed">
+            I ensure websites look and work great across desktops, tablets, and
+            mobile devices.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section
+      id="projects"
+      class="py-16 bg-gradient-to-br from-gray-800 via-gray-900 to-black text-white"
+    >
+      <div class="text-center mb-12">
+        <p
+          class="scroll-animate animate-up text-xs text-gray-400 leading-tight font-light tracking-widest uppercase mb-4"
+        >
+          Portfolio
+        </p>
+        <h2 class="scroll-animate animate-up delay-100 text-4xl font-bold">
+          Featured
+          <span
+            class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600"
+            >Projects</span
+          >
+        </h2>
+      </div>
+
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4 sm:px-6 max-w-6xl mx-auto"
+      >
+        <!-- Project 1 -->
+        <div
+          class="scroll-animate animate-scale delay-200 group bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-6 rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 transform hover:-translate-y-2 border border-gray-700/30 flex flex-col justify-between"
+        >
+          <div>
+            <div
+              class="h-2 bg-gradient-to-r from-green-400 to-green-600 rounded-full mb-6"
+            ></div>
+            <h3
+              class="text-2xl font-bold mb-4 group-hover:text-green-400 transition-colors duration-300"
+            >
+              E-Commerce Landing Page
+            </h3>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              Developed a modern landing page using React and Tailwind CSS.
+              Features include a responsive grid layout, interactive components,
+              and optimized performance for a seamless user experience.
+            </p>
+          </div>
+
+          <!-- View Project (now always at the bottom) -->
+          <a
+            href="#"
+            target="_blank"
+            class="inline-flex items-center text-green-400 hover:text-green-300 transition-colors duration-300 font-medium"
+          >
+            View Project
+            <svg
+              class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Project 2 -->
+        <div
+          class="scroll-animate animate-scale delay-300 group bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-6 rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 transform hover:-translate-y-2 border border-gray-700/30 flex flex-col justify-between"
+        >
+          <div>
+            <div
+              class="h-2 bg-gradient-to-r from-green-400 to-green-600 rounded-full mb-6"
+            ></div>
+            <h3
+              class="text-2xl font-bold mb-4 group-hover:text-green-400 transition-colors duration-300"
+            >
+              Blogging Platform (Frontend Only)
+            </h3>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              Built the frontend for a blogging platform with React. Includes
+              dynamic routing, reusable components, and responsive styling with
+              Tailwind.
+            </p>
+          </div>
+
+          <!-- View Project (now always at the bottom) -->
+          <a
+            href="#"
+            target="_blank"
+            class="inline-flex items-center text-green-400 hover:text-green-300 transition-colors duration-300 font-medium"
+          >
+            View Project
+            <svg
+              class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Project 3 -->
+        <div
+          class="scroll-animate animate-scale delay-400 group bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-6 rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 transform hover:-translate-y-2 border border-gray-700/30 flex flex-col justify-between"
+        >
+          <div>
+            <div
+              class="h-2 bg-gradient-to-r from-green-400 to-green-600 rounded-full mb-6"
+            ></div>
+            <h3
+              class="text-2xl font-bold mb-4 group-hover:text-green-400 transition-colors duration-300"
+            >
+              Spotify Clone Project
+            </h3>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              Recreated the frontend of Spotify using React and Tailwind CSS,
+              focusing on responsiveness, interactivity, and clean code
+              structure.
+            </p>
+          </div>
+
+          <!-- View Project (now always at the bottom) -->
+          <a
+            href="#"
+            target="_blank"
+            class="inline-flex items-center text-green-400 hover:text-green-300 transition-colors duration-300 font-medium"
+          >
+            View Project
+            <svg
+              class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section
+      id="about"
+      class="backdrop-blur-sm flex items-center justify-center py-16 min-h-screen w-full bg-fixed bg-cover bg-center relative"
+      style="background-image: url('../img/about-bg.jpg')"
+    >
+      <div class="absolute inset-0 bg-black/70"></div>
+      <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+        <p
+          class="scroll-animate animate-up text-xs text-gray-400 leading-tight font-light tracking-widest uppercase mb-4"
+        >
+          MY BIO
+        </p>
+        <h2
+          class="scroll-animate animate-up delay-100 text-white font-bold text-4xl mb-12"
+        >
+          About
+          <span
+            class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600"
+            >me</span
+          >.
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <!-- Profile Image -->
+          <div
+            class="scroll-animate animate-left delay-200 flex justify-center"
+          >
+            <div class="relative">
+              <div
+                class="w-80 h-80 rounded-full bg-gradient-to-br from-green-400/20 to-green-600/20 p-2"
+              >
+                <div
+                  class="w-full h-full rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-6xl font-bold overflow-hidden"
+                >
+                  <svg
+                    class="w-48 h-48 text-gray-400"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div
+                class="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-green-400 to-green-600 rounded-full animate-pulse"
+              ></div>
+              <div
+                class="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-r from-green-600 to-green-400 rounded-full animate-pulse delay-300"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Bio Content -->
+          <div class="text-left space-y-6">
+            <h3
+              class="scroll-animate animate-right delay-200 text-2xl font-bold text-white"
+            >
+              Frontend Developer
+            </h3>
+            <p
+              class="scroll-animate animate-right delay-300 text-gray-300 leading-relaxed"
+            >
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              Excepturi porro quod beatae esse eaque id, dolore eos natus!
+              Minima laborum necessitatibus aut esse ducimus nostrum debitis
+              nihil, sit molestiae tenetur!
+            </p>
+            <p
+              class="scroll-animate animate-right delay-400 text-gray-300 leading-relaxed"
+            >
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+              Consequuntur saepe minus accusamus modi nostrum ullam quia quo
+              quas, mollitia numquam esse dolore vero deserunt ex totam dolor,
+              cum, fugit nemo.
+            </p>
+
+            <!-- Skills -->
+            <div class="scroll-animate animate-right delay-500 space-y-4">
+              <h4 class="text-lg font-semibold text-white">
+                Skills & Technologies
+              </h4>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="px-3 py-1 bg-green-400/10 border border-green-400/30 text-green-400 rounded-full text-sm"
+                  >JavaScript</span
+                >
+                <span
+                  class="px-3 py-1 bg-green-400/10 border border-green-400/30 text-green-400 rounded-full text-sm"
+                  >React</span
+                >
+                <span
+                  class="px-3 py-1 bg-green-400/10 border border-green-400/30 text-green-400 rounded-full text-sm"
+                  >Tailwind CSS</span
+                >
+                <span
+                  class="px-3 py-1 bg-green-400/10 border border-green-400/30 text-green-400 rounded-full text-sm"
+                  >TypeScript</span
+                >
+                <span
+                  class="px-3 py-1 bg-green-400/10 border border-green-400/30 text-green-400 rounded-full text-sm"
+                  >Git</span
+                >
+                <span
+                  class="px-3 py-1 bg-green-400/10 border border-green-400/30 text-green-400 rounded-full text-sm"
+                  >MongoDB</span
+                >
+                <span
+                  class="px-3 py-1 bg-green-400/10 border border-green-400/30 text-green-400 rounded-full text-sm"
+                  >Express</span
+                >
+                <span
+                  class="px-3 py-1 bg-green-400/10 border border-green-400/30 text-green-400 rounded-full text-sm"
+                  >Node.js</span
+                >
+              </div>
+            </div>
+
+            <!-- Stats -->
+            <div
+              class="scroll-animate animate-right delay-600 grid grid-cols-3 gap-6 pt-6 border-t border-gray-700"
+            >
+              <div class="text-center">
+                <div
+                  class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600"
+                >
+                  -
+                </div>
+                <div class="text-sm text-gray-400">Years Experience</div>
+              </div>
+              <div class="text-center">
+                <div
+                  class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600"
+                >
+                  -
+                </div>
+                <div class="text-sm text-gray-400">Projects Completed</div>
+              </div>
+              <div class="text-center">
+                <div
+                  class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600"
+                >
+                  -%
+                </div>
+                <div class="text-sm text-gray-400">Client Satisfaction</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section
+      id="contact"
+      class="py-16 bg-gradient-to-br from-gray-900 via-gray-800 to-black"
+    >
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <p
+            class="scroll-animate animate-up text-xs text-gray-400 leading-tight font-light tracking-widest uppercase mb-4"
+          >
+            Get In Touch
+          </p>
+          <h2
+            class="scroll-animate animate-up delay-100 text-4xl font-bold text-white"
+          >
+            Let's Work
+            <span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600"
+              >Together</span
+            >
+          </h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-12">
+          <!-- Contact Info -->
+          <div class="scroll-animate animate-left delay-200 space-y-8">
+            <h3 class="text-2xl font-bold text-white">
+              Ready to start your project?
+            </h3>
+            <p class="text-gray-300 leading-relaxed">
+              I'm always excited to work on new projects and collaborate with
+              amazing people. Whether you have a project in mind or just want to
+              chat, feel free to reach out!
+            </p>
+
+            <div class="space-y-4">
+              <div class="flex items-center space-x-4">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-green-400/20 to-green-600/20 rounded-full flex items-center justify-center"
+                >
+                  <svg
+                    class="w-6 h-6 text-green-400"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="text-white font-semibold">Email</h4>
+                  <p class="text-gray-400">olaosebikani345@gmail.com</p>
+                </div>
+              </div>
+
+              <div class="flex items-center space-x-4">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-green-400/20 to-green-600/20 rounded-full flex items-center justify-center"
+                >
+                  <svg
+                    class="w-6 h-6 text-green-400"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="text-white font-semibold">Location</h4>
+                  <p class="text-gray-400">Osun, Nigeria</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div
+            class="scroll-animate animate-right delay-300 bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/30"
+          >
+            <form
+              action="https://formspree.io/f/meozbwdk"
+              method="POST"
+              class="space-y-6"
+            >
+              <div>
+                <label
+                  for="name"
+                  class="block text-sm font-medium text-gray-300 mb-2"
+                  >Name</label
+                >
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  class="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-lg text-white placeholder-gray-400 focus:border-green-400 focus:outline-none transition-colors duration-300"
+                  placeholder="Your name"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-gray-300 mb-2"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  class="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-lg text-white placeholder-gray-400 focus:border-green-400 focus:outline-none transition-colors duration-300"
+                  placeholder="your.email@example.com"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="subject"
+                  class="block text-sm font-medium text-gray-300 mb-2"
+                  >Subject</label
+                >
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  class="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-lg text-white placeholder-gray-400 focus:border-green-400 focus:outline-none transition-colors duration-300"
+                  placeholder="Project inquiry, collaboration, etc."
+                />
+              </div>
+
+              <div>
+                <label
+                  for="message"
+                  class="block text-sm font-medium text-gray-300 mb-2"
+                  >Message</label
+                >
+                <textarea
+                  rows="5"
+                  id="message"
+                  name="message"
+                  required
+                  class="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-lg text-white placeholder-gray-400 focus:border-green-400 focus:outline-none transition-colors duration-300 resize-none"
+                  placeholder="Tell me about your project, timeline, budget, and any specific requirements..."
+                ></textarea>
+              </div>
+
+              <!-- Honeypot field to prevent spam -->
+              <input type="text" name="_gotcha" style="display: none" />
+
+              <button
+                type="submit"
+                class="w-full px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-green-500/25 hover:scale-105 transition-all duration-300 transform disabled:opacity-50 disabled:cursor-not-allowed"
+                id="submit-btn"
+              >
+                <span id="submit-text">Send Message</span>
+                <span id="loading-text" class="hidden">Sending...</span>
+              </button>
+
+              <!-- Success/Error Messages -->
+              <div id="form-status" class="text-center text-sm"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Enhanced Footer -->
+    <footer class="footer-gradient text-gray-300 relative overflow-hidden">
+      <!-- Decorative elements -->
+      <div class="absolute inset-0 opacity-10">
+        <div
+          class="absolute top-10 left-10 w-32 h-32 bg-green-400/10 rounded-full blur-3xl"
+        ></div>
+        <div
+          class="absolute bottom-10 right-10 w-40 h-40 bg-green-600/10 rounded-full blur-3xl"
+        ></div>
+        <div
+          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-green-500/5 rounded-full blur-3xl"
+        ></div>
+      </div>
+
+      <div class="relative z-10">
+        <!-- Main Footer Content -->
+        <div class="max-w-7xl mx-auto px-6 py-16">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <!-- Brand Section -->
+            <div class="lg:col-span-2 space-y-6">
+              <div>
+                <h1
+                  class="scroll-animate animate-up text-3xl font-bold text-white mb-2"
+                >
+                  Peaches.
+                </h1>
+                <p
+                  class="scroll-animate animate-up delay-100 text-green-400 font-medium mb-4"
+                >
+                  Frontend Developer & UI/UX Enthusiast
+                </p>
+                <p
+                  class="scroll-animate animate-up delay-200 text-gray-400 leading-relaxed max-w-md"
+                >
+                  Creating beautiful, functional, and user-centered digital
+                  experiences. Let's build something amazing together.
+                </p>
+              </div>
+
+              <!-- Social Links -->
+              <div class="scroll-animate animate-up delay-300">
+                <h3 class="text-white font-semibold mb-4">Follow Me</h3>
+                <div class="flex space-x-4">
+                  <a
+                    href="https://github.com/Olaosebikancodes"
+                    target="_blank"
+                    class="w-10 h-10 bg-gray-800/50 hover:bg-green-400/10 border border-gray-700/50 hover:border-green-400/30 rounded-lg flex items-center justify-center text-gray-400 hover:text-green-400 transition-all duration-300 group"
+                  >
+                    <i
+                      class="fab fa-github group-hover:scale-110 transition-transform duration-300"
+                    ></i>
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/olaosebikan-isaac-a70658240/"
+                    target="_blank"
+                    class="w-10 h-10 bg-gray-800/50 hover:bg-green-400/10 border border-gray-700/50 hover:border-green-400/30 rounded-lg flex items-center justify-center text-gray-400 hover:text-green-400 transition-all duration-300 group"
+                  >
+                    <i
+                      class="fab fa-linkedin-in group-hover:scale-110 transition-transform duration-300"
+                    ></i>
+                  </a>
+                  <a
+                    href="https://instagram.com/olaosebikan_isaac"
+                    target="_blank"
+                    class="w-10 h-10 bg-gray-800/50 hover:bg-green-400/10 border border-gray-700/50 hover:border-green-400/30 rounded-lg flex items-center justify-center text-gray-400 hover:text-green-400 transition-all duration-300 group"
+                  >
+                    <i
+                      class="fab fa-instagram group-hover:scale-110 transition-transform duration-300"
+                    ></i>
+                  </a>
+                  <a
+                    href="https://wa.me/2348108621534"
+                    target="_blank"
+                    class="w-10 h-10 bg-gray-800/50 hover:bg-green-400/10 border border-gray-700/50 hover:border-green-400/30 rounded-lg flex items-center justify-center text-gray-400 hover:text-green-400 transition-all duration-300 group"
+                  >
+                    <i
+                      class="fab fa-whatsapp group-hover:scale-110 transition-transform duration-300"
+                    ></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Navigation -->
+            <div class="scroll-animate animate-up delay-400">
+              <h3 class="text-white font-semibold mb-6">Quick Links</h3>
+              <ul class="space-y-3">
+                <li>
+                  <a
+                    href="#home"
+                    class="text-gray-400 hover:text-green-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span
+                      class="w-1 h-1 bg-green-400 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    ></span>
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#projects"
+                    class="text-gray-400 hover:text-green-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span
+                      class="w-1 h-1 bg-green-400 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    ></span>
+                    Projects
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#about"
+                    class="text-gray-400 hover:text-green-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span
+                      class="w-1 h-1 bg-green-400 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    ></span>
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#contact"
+                    class="text-gray-400 hover:text-green-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span
+                      class="w-1 h-1 bg-green-400 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    ></span>
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="scroll-animate animate-up delay-500">
+              <h3 class="text-white font-semibold mb-6">Get in Touch</h3>
+              <div class="space-y-4">
+                <div class="flex items-start space-x-3">
+                  <div class="w-5 h-5 text-green-400 mt-1">
+                    <i class="fas fa-envelope text-sm"></i>
+                  </div>
+                  <div>
+                    <p class="text-gray-400 text-sm">Email</p>
+                    <a
+                      href="mailto:olaosebikani345@gmail.com"
+                      class="text-white hover:text-green-400 transition-colors duration-300 text-sm"
+                    >
+                      olaosebikani345@gmail.com
+                    </a>
+                  </div>
+                </div>
+
+                <div class="flex items-start space-x-3">
+                  <div class="w-5 h-5 text-green-400 mt-1">
+                    <i class="fas fa-map-marker-alt text-sm"></i>
+                  </div>
+                  <div>
+                    <p class="text-gray-400 text-sm">Location</p>
+                    <p class="text-white text-sm">Osun, Nigeria</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start space-x-3">
+                  <div class="w-5 h-5 text-green-400 mt-1">
+                    <i class="fas fa-clock text-sm"></i>
+                  </div>
+                  <div>
+                    <p class="text-gray-400 text-sm">Availability</p>
+                    <p class="text-white text-sm">Open to new opportunities</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="border-t border-gray-800/50 backdrop-blur-sm">
+          <div class="max-w-7xl mx-auto px-6 py-6">
+            <div
+              class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
+            >
+              <div class="text-center md:text-left">
+                <p class="text-sm text-gray-400">
+                  © 2025
+                  <span class="text-white font-medium">Isaac Olaosebikan</span>.
+                  All rights reserved.
+                </p>
+              </div>
+
+              <div class="flex items-center space-x-6 text-sm">
+                <p class="text-gray-400">
+                  Developed with
+                  <span class="text-red-400 mx-1">♥</span>
+                  by
+                  <span class="text-green-400 font-medium">Peaches</span>
+                </p>
+                <span class="text-gray-600">|</span>
+                <a
+                  href="https://dribbble.com/shots/22413177-Frontend-Developer-Portfolio"
+                  target="_blank"
+                  class="text-gray-400 hover:text-green-400 transition-colors duration-300"
+                >
+                  Inspiration from Dribbble
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Intersection Observer for scroll animations
+      function initScrollAnimations() {
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px",
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              // Stop observing once animated to prevent re-triggering
+              observer.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        // Observe all elements with scroll-animate class
+        document.querySelectorAll(".scroll-animate").forEach((el) => {
+          observer.observe(el);
+        });
+      }
+
+      function setActive(element) {
+        // Remove active class from all nav links
+        document.querySelectorAll(".nav-link").forEach((link) => {
+          link.classList.remove("border-green-400", "text-green-400");
+          link.classList.add("border-transparent");
+        });
+
+        // Add active class to clicked element
+        element.classList.remove("border-transparent");
+        element.classList.add("border-green-400", "text-green-400");
+      }
+
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobile-menu");
+        const hamburger = document.querySelector(".hamburger");
+
+        menu.classList.toggle("hidden");
+        hamburger.classList.toggle("active");
+      }
+
+      function closeMobileMenu() {
+        const menu = document.getElementById("mobile-menu");
+        const hamburger = document.querySelector(".hamburger");
+
+        menu.classList.add("hidden");
+        hamburger.classList.remove("active");
+      }
+
+      // Handle form submission
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize scroll animations
+        initScrollAnimations();
+
+        const homeLink = document.querySelector('a[href="#home"]');
+        if (homeLink) {
+          setActive(homeLink);
+        }
+
+        // Form submission handler
+        const form = document.querySelector("#contact form");
+        const submitBtn = document.getElementById("submit-btn");
+        const submitText = document.getElementById("submit-text");
+        const loadingText = document.getElementById("loading-text");
+        const formStatus = document.getElementById("form-status");
+
+        if (form) {
+          form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitText.classList.add("hidden");
+            loadingText.classList.remove("hidden");
+            formStatus.innerHTML = "";
+
+            try {
+              const formData = new FormData(form);
+              const response = await fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                  Accept: "application/json",
+                },
+              });
+
+              if (response.ok) {
+                // Success
+                formStatus.innerHTML =
+                  '<div class="text-green-400 bg-green-400/10 border border-green-400/30 rounded-lg p-3">✅ Thank you! Your message has been sent successfully. I\'ll get back to you soon!</div>';
+                form.reset();
+              } else {
+                throw new Error("Network response was not ok");
+              }
+            } catch (error) {
+              // Error
+              formStatus.innerHTML =
+                '<div class="text-red-400 bg-red-400/10 border border-red-400/30 rounded-lg p-3">❌ Oops! There was an error sending your message. Please try again or contact me directly via email/WhatsApp.</div>';
+            } finally {
+              // Reset button state
+              submitBtn.disabled = false;
+              submitText.classList.remove("hidden");
+              loadingText.classList.add("hidden");
+            }
+          });
+        }
+
+        // Close mobile menu when clicking on links
+        document.querySelectorAll("#mobile-menu a").forEach((link) => {
+          link.addEventListener("click", closeMobileMenu);
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener("click", function (event) {
+          const menu = document.getElementById("mobile-menu");
+          const menuBtn = document.getElementById("mobile-menu-btn");
+
+          if (!menu.contains(event.target) && !menuBtn.contains(event.target)) {
+            if (!menu.classList.contains("hidden")) {
+              closeMobileMenu();
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
